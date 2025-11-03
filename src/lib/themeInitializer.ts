@@ -1,21 +1,19 @@
 // This script runs BEFORE React renders to prevent theme flash
-// It immediately applies the saved theme or defaults to system theme
+// Always follows device/system theme
 
 export function initializeTheme() {
-  const applyTheme = (themeMode: "light" | "dark" | "system") => {
-    let actualTheme: "light" | "dark";
-    
-    if (themeMode === "system") {
-      actualTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    } else {
-      actualTheme = themeMode;
-    }
-    
-    document.documentElement.classList.toggle("dark", actualTheme === "dark");
+  const applySystemTheme = () => {
+    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.classList.toggle("dark", isDark);
   };
 
-  const savedTheme = localStorage.getItem("theme") as "light" | "dark" | "system" | null;
-  const initialTheme = savedTheme || "system";
+  // Clear any old theme preference
+  localStorage.removeItem("theme");
   
-  applyTheme(initialTheme);
+  // Apply system theme
+  applySystemTheme();
+  
+  // Listen for system theme changes
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  mediaQuery.addEventListener("change", applySystemTheme);
 }
