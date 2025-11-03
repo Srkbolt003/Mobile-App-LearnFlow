@@ -7,9 +7,10 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
-import { BookOpen, Edit, LogOut, X } from 'lucide-react';
+import { BookOpen, Edit, LogOut, X, Settings } from 'lucide-react';
 import { getAvatarColor } from '@/lib/avatarColors';
 import { getEnrolledCourses, unenrollFromCourse, Course } from '@/lib/courseManager';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { 
   BottomSheet, 
   BottomSheetContent, 
@@ -118,6 +119,26 @@ export default function Profile() {
             <p className="text-sm text-muted-foreground mt-3">{user.bio}</p>
           )}
         </div>
+
+        {/* Settings Card */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Settings className="h-5 w-5" />
+              Settings
+            </CardTitle>
+            <CardDescription className="text-sm">Customize your preferences</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div>
+                <Label className="text-sm font-medium">Appearance</Label>
+                <p className="text-xs text-muted-foreground mt-1">Toggle between light and dark mode</p>
+              </div>
+              <ThemeToggle />
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Logout Button */}
         <div className="mb-6">
