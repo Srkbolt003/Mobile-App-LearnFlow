@@ -18,11 +18,10 @@ export function ThemeToggle() {
   };
 
   useEffect(() => {
+    // Sync state with already-applied theme
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | "system" | null;
     const initialTheme = savedTheme || "system";
-    
     setTheme(initialTheme);
-    applyTheme(initialTheme);
 
     // Listen for system theme changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
