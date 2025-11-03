@@ -4,6 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Home, BookOpen, Calendar, TrendingUp, User, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { getAvatarColor } from '@/lib/avatarColors';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { NotificationCenter } from '@/components/NotificationCenter';
 import { NetworkStatus } from '@/components/NetworkStatus';
 
@@ -29,6 +30,7 @@ export function Navbar() {
             LearnFlow
           </Link>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             {!loading && (
               <Button variant="ghost" onClick={() => navigate('/login')} className="touch-target">
                 Login
@@ -49,6 +51,7 @@ export function Navbar() {
           <span className="text-lg font-display font-bold">LearnFlow</span>
           <div className="flex items-center gap-1">
             <NetworkStatus />
+            <ThemeToggle />
             <NotificationCenter />
           </div>
         </div>
