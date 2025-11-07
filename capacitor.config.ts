@@ -24,10 +24,11 @@ const config: CapacitorConfig = {
       splashFullScreen: true,
       splashImmersive: true,
     },
-    StatusBar: {
-      overlaysWebView: false,
-      // Let Android handle native system status bar
-    },
+   plugins: {
+  StatusBar: {
+    overlaysWebView: false
+  }
+}
     Keyboard: {
       resize: 'body',
       resizeOnFullScreen: true,
