@@ -25,9 +25,8 @@ const config: CapacitorConfig = {
       splashImmersive: true,
     },
     StatusBar: {
-      overlaysWebView: true,
-      style: 'light',
-      backgroundColor: '#ffffff',
+      overlaysWebView: false,
+      // Let Android handle native system status bar
     },
     Keyboard: {
       resize: 'body',

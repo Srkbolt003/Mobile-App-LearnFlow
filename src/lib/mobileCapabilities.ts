@@ -53,16 +53,7 @@ export const initializeMobileCapabilities = async () => {
       }
     });
 
-    // Listen for theme changes
-    if (typeof window !== 'undefined') {
-      const observer = new MutationObserver(() => {
-        updateStatusBarForTheme();
-      });
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class']
-      });
-    }
+    // Status bar now uses Android's native theme - no need to observe changes
 
   } catch (error) {
     console.error('Error initializing mobile capabilities:', error);
@@ -73,24 +64,17 @@ export const updateStatusBarForTheme = async () => {
   if (!Capacitor.isNativePlatform()) return;
   
   try {
-    const isDark = document.documentElement.classList.contains('dark');
-    
     // Don't overlay content - give status bar its own space
     await StatusBar.setOverlaysWebView({ overlay: false });
     
-    // Set status bar style based on theme
-    // Light style = light icons/text (for dark backgrounds)
-    // Dark style = dark icons/text (for light backgrounds)
+    // Use Android's default system style - automatically adapts to device theme
     await StatusBar.setStyle({ 
-      style: isDark ? Style.Light : Style.Dark 
+      style: Style.Default 
     });
     
-    // For Android, set background color based on theme
-    if (Capacitor.getPlatform() === 'android') {
-      await StatusBar.setBackgroundColor({ 
-        color: isDark ? '#1a0f2e' : '#ede9fe' 
-      });
-    }
+    // Do NOT set backgroundColor for Android - let it use native theme
+    // The Android system will handle the color based on the device theme
+    
   } catch (error) {
     console.error('Error updating status bar:', error);
   }
