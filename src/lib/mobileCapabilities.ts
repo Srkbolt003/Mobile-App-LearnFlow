@@ -62,23 +62,26 @@ export const initializeMobileCapabilities = async () => {
 
 export const updateStatusBarForTheme = async () => {
   if (!Capacitor.isNativePlatform()) return;
-  
+
   try {
-    // Don't overlay content - give status bar its own space
+    // Make sure status bar doesn't overlap
     await StatusBar.setOverlaysWebView({ overlay: false });
-    
-    // Use Android's default system style - automatically adapts to device theme
-    await StatusBar.setStyle({ 
-      style: Style.Default 
+
+    // Detect light or dark mode from your web app
+    const isDark = document.documentElement.classList.contains('dark');
+
+    // ✅ Handle icon color manually instead of relying on Style.Default
+    await StatusBar.setStyle({
+      style: isDark ? Style.Light : Style.Dark
     });
-    
-    // Do NOT set backgroundColor for Android - let it use native theme
-    // The Android system will handle the color based on the device theme
-    
+
+    // ✅ Do NOT set backgroundColor - let Android choose system color
+
   } catch (error) {
     console.error('Error updating status bar:', error);
   }
 };
+
 
 export const isNativePlatform = () => Capacitor.isNativePlatform();
 export const getPlatform = () => Capacitor.getPlatform();
